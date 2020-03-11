@@ -17,4 +17,9 @@ $_sql = new Sql();
 $loss_plot = $_sql->SELECT_lossPlot($experiment_id);
 
 header('Content-type: image/png');
-echo $loss_plot;
+
+if ($loss_plot == null) {
+    echo file_get_contents("./lossPlotDefault.png");
+} else {
+    echo $loss_plot;
+}

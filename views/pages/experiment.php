@@ -24,6 +24,12 @@ Layout::echoHead();
     </div>
 
     <div class="row">
+        <div class="col-12 justify-content-center d-flex">
+            <img src="/image/getLossPlot.php?experiment_id=<?=$experimentId?>">
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-12">
             <table class="table table-bordered dataTable">
                 <thead>
