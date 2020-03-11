@@ -115,6 +115,16 @@ class Sql
         return $query->fetch()->image;
     }
 
+    public function SELECT_lossPlot(int $experiment_id): string {
+        $query = $this->_db->prepare('SELECT loss_plot from loss_plots WHERE experiment_id=:experiment_id');
+
+        $query->execute([
+            ":experiment_id" => $experiment_id,
+        ]);
+
+        return $query->fetch()->loss_plot;
+    }
+
     public function SELECT_allEpochsForImagesByExperimentId(int $experiment_id): array {
         $query = $this->_db->prepare('SELECT epoch_nr, timestamp from images WHERE experiment_id=:experiment_id ORDER BY epoch_nr DESC');
 
