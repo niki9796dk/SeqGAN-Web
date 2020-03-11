@@ -1,0 +1,6 @@
+.clickable:hover,
+.clickable tr:hover,
+.clickable tr td:hover,
+.clickable td:hover {
+    cursor: pointer;
+}
