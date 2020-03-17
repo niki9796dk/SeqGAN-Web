@@ -27,6 +27,7 @@ Layout::echoHead();
         <div class="col-12 justify-content-center d-flex">
             <img src="/image/getHistogramPlot.php?experiment_id=<?=$experimentId?>">
             <img src="/image/getLossPlot.php?experiment_id=<?=$experimentId?>">
+            <pre class="bg-white ml-5"><?=file_get_contents("http://seqgan.primen.dk/api/hyperParameters.php?experiment_id={$experimentId}")?></pre>
         </div>
     </div>
 

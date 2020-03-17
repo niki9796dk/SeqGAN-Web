@@ -32,7 +32,7 @@ Layout::echoHead();
                         <td data-sort="<?=-$experiments->experiment_id?>"><?=$experiments->experiment_id?></td>
                         <td><?=$experiments->name?> <?=$experiments->good ? "<span style='font-size: 1.5em; color: orange'>&#9733;</span>" : ""?></td>
                         <td><?=$experiments->model?></td>
-                        <td><pre><?=prettyPrint($experiments->locals)?></pre></td>
+                        <td><pre><?=file_get_contents("http://seqgan.primen.dk/api/hyperParameters.php?experiment_id={$experiments->experiment_id}")?></pre></td>
                         <td>
                             <?=$experiments->timestamp?>
                             <br>
