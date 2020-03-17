@@ -15,12 +15,12 @@ $experiment_id = intval($_REQUEST["experiment_id"]);
 
 $_sql = new Sql();
 
-$loss_plot = $_sql->SELECT_lossPlot($experiment_id);
+$histogram_plot = $_sql->SELECT_histogramPlot($experiment_id);
 
 header('Content-type: image/png');
 
-if ($loss_plot == null) {
-    echo file_get_contents("./lossPlotDefault.png");
+if ($histogram_plot == null) {
+    echo file_get_contents("./histogramDefault.png");
 } else {
-    echo $loss_plot;
+    echo $histogram_plot;
 }

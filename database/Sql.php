@@ -125,6 +125,16 @@ class Sql
         return $query->fetch()->loss_plot;
     }
 
+    public function SELECT_histogramPlot(int $experiment_id): ?string {
+        $query = $this->_db->prepare('SELECT histogram from histograms WHERE experiment_id=:experiment_id ORDER BY epoch_nr LIMIT 1');
+
+        $query->execute([
+            ":experiment_id" => $experiment_id,
+        ]);
+
+        return $query->fetch()->histogram;
+    }
+
     public function SELECT_allEpochsForImagesByExperimentId(int $experiment_id): array {
         $query = $this->_db->prepare('SELECT epoch_nr, timestamp from images WHERE experiment_id=:experiment_id ORDER BY epoch_nr DESC');
 

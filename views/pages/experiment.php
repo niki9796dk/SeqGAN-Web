@@ -25,6 +25,7 @@ Layout::echoHead();
 
     <div class="row">
         <div class="col-12 justify-content-center d-flex">
+            <img src="/image/getHistogramPlot.php?experiment_id=<?=$experimentId?>">
             <img src="/image/getLossPlot.php?experiment_id=<?=$experimentId?>">
         </div>
     </div>
