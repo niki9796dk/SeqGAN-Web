@@ -28,17 +28,30 @@ class Sql
         $this->_db = $pdo;
     }
 
-    public function SELECT_allExperiments(): array {
+    public function SELECT_latestPeriod(): int {
+        $query = $this->_db->prepare('SELECT max(period) as latest_period FROM experiments');
+
+        $query->execute([]);
+        return intval($query->fetch()->latest_period);
+    }
+
+    public function SELECT_allExperimentsFromPeriod($period = NULL): array {
+        if (!isset($period)) {
+            $period = $this->SELECT_latestPeriod();
+        }
+
         $query = $this->_db->prepare('
                                                 SELECT experiments.*, running FROM experiments
                                                  
                                                 LEFT JOIN experiment_export_rates
                                                 ON experiments.experiment_id = experiment_export_rates.experiment_id
                                                 
+                                                WHERE period=:period
+                                                
                                                 ORDER BY experiment_id DESC
                                                 ');
 
-        $query->execute([]);
+        $query->execute([":period" => $period]);
         return $query->fetchAll();
     }
 

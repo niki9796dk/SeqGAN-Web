@@ -12,7 +12,7 @@ $lastWednesday = new DateTime("last wednesday");
 $thisWednesday = new DateTime("this wednesday");
 
 $recentExperiments = [];
-foreach ($_sql->SELECT_allExperiments() as $run) {
+foreach ($_sql->SELECT_allExperimentsFromPeriod() as $run) {
     $start = new DateTime($run->timestamp);
 
     if ($lastWednesday <= $start && $start <= $thisWednesday) {
