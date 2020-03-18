@@ -18,9 +18,9 @@ class Layout
             <div class="row">
                 <div class="col-12 py-3">
                     <a class="btn btn-primary" href="/">Front page</a>
-                    <a class="btn btn-primary ml-3" href="/views/pages/compareRunning.php">Compare running</a>
-                    <a class="btn btn-primary ml-3" href="/views/pages/compareRecent.php">Compare recent</a>
-                    <a class="btn btn-primary ml-3" href="/views/pages/compareRecentGood.php">Compare recent good</a>
+                    <a class="btn btn-primary ml-3" href="/views/pages/compareRunning.php?cols=2">Compare running</a>
+                    <a class="btn btn-primary ml-3" href="/views/pages/compareRecent.php?cols=2">Compare recent</a>
+                    <a class="btn btn-primary ml-3" href="/views/pages/compareRecentGood.php?cols=2">Compare recent good</a>
                 </div>
             </div>
         </div>
