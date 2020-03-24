@@ -35,6 +35,14 @@ class Sql
         return intval($query->fetch()->latest_period);
     }
 
+    public function SELECT_metricsForExperimentById($id) {
+        $query = $this->_db->prepare('SELECT * FROM metrics WHERE metrics.experiment_id = :id ORDER BY epoch_nr DESC LIMIT 1');
+
+        $query->execute([":id" => $id]);
+
+        return $query->fetch();
+    }
+
     public function SELECT_allExperimentsFromPeriod($period = NULL): array {
         if (!isset($period)) {
             $period = $this->SELECT_latestPeriod();
