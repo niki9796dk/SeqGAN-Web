@@ -10,7 +10,7 @@ $experimentId = intval($_REQUEST["id"]);
 $_sql = new Sql();
 
 $experiment = $_sql->SELECT_experiment($experimentId);
-$metrics =  $_sql->SELECT_metricsForExperimentById($experimentId);
+$metrics =  $_sql->SELECT_allMetricsForExperimentById($experimentId);
 $metricDefault = "?";
 
 Layout::echoHead();
@@ -35,9 +35,10 @@ Layout::echoHead();
 
     <div class="row my-5">
         <div class="col-12">
-            <table class="w-100 border-dark table">
+            <table class="w-100 border-dark table table-hover">
                 <thead>
                     <tr>
+                        <th>Epoch</th>
                         <th>Accuracy</th>
                         <th># Correct</th>
                         <th># Wrong</th>
@@ -53,20 +54,23 @@ Layout::echoHead();
                     </tr>
                 </thead>
                 <tbody>
+                <?php foreach($metrics as $metric): ?>
                     <tr>
-                        <td><?=$metrics->accuracy ?? $metricDefault?></td>
-                        <td><?=$metrics->correct_sequences ?? $metricDefault?></td>
-                        <td><?=$metrics->wrong_sequences ?? $metricDefault?></td>
-                        <td><?=!is_null($metrics->unique_correct_sequences) ? ($metrics->unique_correct_sequences + $metrics->unique_wrong_sequences) : $metricDefault?></td>
-                        <td><?=$metrics->unique_correct_sequences ?? $metricDefault?></td>
-                        <td><?=$metrics->unique_wrong_sequences ?? $metricDefault?></td>
-                        <td><?=$metrics->edit_distance_all ?? $metricDefault?></td>
-                        <td><?=$metrics->edit_distance_wrong ?? $metricDefault?></td>
-                        <td><?=$metrics->edit_distance_unique_wrong ?? $metricDefault?></td>
-                        <td><?=$metrics->correct_entropy ?? $metricDefault?></td>
-                        <td><?=$metrics->wrong_entropy ?? $metricDefault?></td>
-                        <td><?=$metrics->sequence_entropy ?? $metricDefault?></td>
+                        <td><?=$metric->epoch_nr ?? $metricDefault?></td>
+                        <td><?=$metric->accuracy ?? $metricDefault?></td>
+                        <td><?=$metric->correct_sequences ?? $metricDefault?></td>
+                        <td><?=$metric->wrong_sequences ?? $metricDefault?></td>
+                        <td><?=!is_null($metric->unique_correct_sequences) ? ($metric->unique_correct_sequences + $metric->unique_wrong_sequences) : $metricDefault?></td>
+                        <td><?=$metric->unique_correct_sequences ?? $metricDefault?></td>
+                        <td><?=$metric->unique_wrong_sequences ?? $metricDefault?></td>
+                        <td><?=$metric->edit_distance_all ?? $metricDefault?></td>
+                        <td><?=$metric->edit_distance_wrong ?? $metricDefault?></td>
+                        <td><?=$metric->edit_distance_unique_wrong ?? $metricDefault?></td>
+                        <td><?=$metric->correct_entropy ?? $metricDefault?></td>
+                        <td><?=$metric->wrong_entropy ?? $metricDefault?></td>
+                        <td><?=$metric->sequence_entropy ?? $metricDefault?></td>
                     </tr>
+                <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
