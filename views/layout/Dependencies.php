@@ -14,6 +14,7 @@ class Dependencies
             "libs/jQuery/jquery-3.4.1.min.js",
             "libs/bootstrap/js/bootstrap.bundle.min.js",
             "js/dataTable.js",
+            "js/clickable.js",
         ];
     }
 }

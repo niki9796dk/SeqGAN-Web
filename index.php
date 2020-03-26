@@ -2,8 +2,8 @@
 
 $_sql = new Sql();
 
-$period = ($_REQUEST["period"]) ?: NULL;
-$latest_period = $_sql->SELECT_latestPeriod()+1;
+$period = isset($_REQUEST["period"]) ? $_REQUEST["period"] : NULL;
+$latest_period = $_sql->SELECT_latestPeriod();
 
 Layout::echoHead();
 ?>
@@ -19,7 +19,7 @@ Layout::echoHead();
 
     <div class="row">
         <div class="col-12">
-            <?php for ($i = 0; $i < $latest_period; $i++):?>
+            <?php for ($i = 0; $i < $latest_period+1; $i++):?>
             <a class="btn btn-secondary mr-3 mb-3" href="/index.php?period=<?=$i?>">Period #<?=$i?></a>
             <?php endfor; ?>
         </div>
@@ -39,7 +39,7 @@ Layout::echoHead();
                 </thead>
                 <tbody>
                 <?php foreach ($_sql->SELECT_allExperimentsFromPeriod($period) as $experiments): ?>
-                    <tr class="clickable" onclick="window.location.href = '/views/pages/experiment.php?id=<?=$experiments->experiment_id?>';">
+                    <tr class="clickable" data-href="/views/pages/experiment.php?id=<?=$experiments->experiment_id?>">
                         <td data-sort="<?=-$experiments->experiment_id?>"><?=$experiments->experiment_id?></td>
                         <td><?=$experiments->name?> <?=$experiments->good ? "<span style='font-size: 1.5em; color: orange'>&#9733;</span>" : ""?></td>
                         <td><?=$experiments->model?></td>

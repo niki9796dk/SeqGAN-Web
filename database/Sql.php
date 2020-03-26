@@ -36,9 +36,41 @@ class Sql
     }
 
     public function SELECT_allMetricsForExperimentById($id) {
-        $query = $this->_db->prepare('SELECT * FROM metrics WHERE metrics.experiment_id = :id ORDER BY epoch_nr DESC');
+        $query = $this->_db->prepare('
+                                                SELECT metrics.*, 
+                                                       accuracy=best_accuracy as best_accuracy,
+                                                       (unique_correct_sequences+unique_wrong_sequences)=best_unique_sequences as best_unique_sequences,
+                                                       unique_correct_sequences=best_unique_correct_sequences as best_unique_correct_sequences,
+                                                       unique_wrong_sequences=best_unique_wrong_sequences as best_unique_wrong_sequences,
+                                                       edit_distance_all=best_edit_distance_all as best_edit_distance_all,
+                                                       edit_distance_wrong=best_edit_distance_wrong as best_edit_distance_wrong,
+                                                       edit_distance_unique_wrong=best_edit_distance_unique_wrong as best_edit_distance_unique_wrong,
+                                                       sequence_entropy=best_sequence_entropy as best_sequence_entropy,
+                                                       correct_entropy=best_correct_entropy as best_correct_entropy,
+                                                       wrong_entropy=best_wrong_entropy as best_wrong_entropy
+                                                FROM metrics, (
+                                                    SELECT 
+                                                           MAX(accuracy) as best_accuracy,
+                                                           MAX(unique_correct_sequences + unique_wrong_sequences) as best_unique_sequences,
+                                                           MAX(unique_correct_sequences) as best_unique_correct_sequences,
+                                                           MIN(unique_wrong_sequences) as best_unique_wrong_sequences,
+                                                           MIN(edit_distance_all) as best_edit_distance_all,
+                                                           MIN(edit_distance_wrong) as best_edit_distance_wrong,
+                                                           MIN(edit_distance_unique_wrong) as best_edit_distance_unique_wrong,
+                                                           MIN(sequence_entropy) as best_sequence_entropy,
+                                                           MIN(correct_entropy) as best_correct_entropy,
+                                                           MIN(wrong_entropy) as best_wrong_entropy
+                                                    from metrics 
+                                                    WHERE experiment_id = :id_1
+                                                    ) as best
+                                                WHERE  metrics.experiment_id = :id_2
+                                                ORDER BY epoch_nr DESC
+                                                ');
 
-        $query->execute([":id" => $id]);
+        $query->execute([
+            ":id_1" => $id,
+            ":id_2" => $id,
+            ]);
 
         return $query->fetchAll();
     }

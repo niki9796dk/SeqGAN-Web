@@ -12,6 +12,7 @@ $_sql = new Sql();
 $experiment = $_sql->SELECT_experiment($experimentId);
 $metrics =  $_sql->SELECT_allMetricsForExperimentById($experimentId);
 $metricDefault = "?";
+$decimals = 0;
 
 Layout::echoHead();
 ?>
@@ -34,41 +35,44 @@ Layout::echoHead();
     </div>
 
     <div class="row my-5">
-        <div class="col-12">
-            <table class="w-100 border-dark table table-hover">
-                <thead>
-                    <tr>
+        <div class="col-12 justify-content-center d-flex">
+            <table class="border-dark table table-hover w-auto">
+                <thead class="">
+                    <tr class="text-center">
+                        <th colspan="2" class="border-top-0"></th>
+                        <th colspan="3" class="bg-white text-center border-left border-top">% Unique</th>
+                        <th colspan="2" class="bg-white text-center border-left border-top">Mean edit distance</th>
+                        <th colspan="3" class="bg-white text-center border-left border-top border-right">Entropy score</th>
+                    </tr>
+                    <tr class="border-left border-right text-center bg-white">
                         <th>Epoch</th>
-                        <th>Accuracy</th>
-                        <th># Correct</th>
-                        <th># Wrong</th>
-                        <th># Unique</th>
-                        <th># Unique Correct</th>
-                        <th># Unique Wrong</th>
-                        <th>Mean edit distance all</th>
-                        <th>Mean edit distance wrong</th>
-                        <th>Mean edit distance unique wrong</th>
-                        <th>Entropy correct</th>
-                        <th>Entropy wrong</th>
-                        <th>Entropy all</th>
+                        <th class="border-left">Accuracy</th>
+                        <th class="border-left">All</th>
+                        <th>Correct</th>
+                        <th>Wrong</th>
+                        <th class="border-left">All</th>
+                        <th>Wrong</th>
+                        <th class="border-left">All</th>
+                        <th>Correct</th>
+                        <th>Wrong</th>
                     </tr>
                 </thead>
-                <tbody>
-                <?php foreach($metrics as $metric): ?>
-                    <tr>
-                        <td><?=$metric->epoch_nr ?? $metricDefault?></td>
-                        <td><?=$metric->accuracy ?? $metricDefault?></td>
-                        <td><?=$metric->correct_sequences ?? $metricDefault?></td>
-                        <td><?=$metric->wrong_sequences ?? $metricDefault?></td>
-                        <td><?=!is_null($metric->unique_correct_sequences) ? ($metric->unique_correct_sequences + $metric->unique_wrong_sequences) : $metricDefault?></td>
-                        <td><?=$metric->unique_correct_sequences ?? $metricDefault?></td>
-                        <td><?=$metric->unique_wrong_sequences ?? $metricDefault?></td>
-                        <td><?=$metric->edit_distance_all ?? $metricDefault?></td>
-                        <td><?=$metric->edit_distance_wrong ?? $metricDefault?></td>
-                        <td><?=$metric->edit_distance_unique_wrong ?? $metricDefault?></td>
-                        <td><?=$metric->correct_entropy ?? $metricDefault?></td>
-                        <td><?=$metric->wrong_entropy ?? $metricDefault?></td>
-                        <td><?=$metric->sequence_entropy ?? $metricDefault?></td>
+                <tbody class="text-center bg-white">
+                <?php foreach($metrics as $metric):
+                    $total = $metric->correct_sequences + $metric->wrong_sequences;
+                    $unique_total = $metric->unique_correct_sequences + $metric->unique_wrong_sequences;
+                    ?>
+                    <tr class="border">
+                        <td><?=$metric->epoch_nr?></td>
+                        <td class="border-left <?=$metric->best_accuracy == 1 ? "font-weight-bold" : ""?>"><?=number_format(($metric->accuracy * 100), $decimals)?>%</td>
+                        <td class="border-left <?=$metric->best_unique_sequences == 1 ? "font-weight-bold" : ""?>"><?=number_format(($unique_total / $total) * 100, $decimals)?>%</td>
+                        <td class="<?=$metric->best_unique_correct_sequences == 1 ? "font-weight-bold" : ""?>"><?=number_format($metric->unique_correct_sequences * 100 / $total)?>% <small>(<?=number_format($metric->unique_correct_sequences * 100 / $unique_total)?>%)</small></td>
+                        <td class="<?=$metric->best_unique_wrong_sequences == 1 ? "font-weight-bold" : ""?>"><?=number_format($metric->unique_wrong_sequences * 100 / $total)?>% <small>(<?=number_format($metric->unique_wrong_sequences * 100 / $unique_total)?>%)</small></td>
+                        <td class="border-left <?=$metric->best_edit_distance_all == 1 ? "font-weight-bold" : ""?>"><?=number_format($metric->edit_distance_all, 2)?></td>
+                        <td class="<?=$metric->best_edit_distance_wrong == 1 ? "font-weight-bold" : ""?>"><?=number_format($metric->edit_distance_wrong, 2)?></td>
+                        <td class="border-left <?=$metric->best_sequence_entropy == 1 ? "font-weight-bold" : ""?>"><?=number_format($metric->sequence_entropy*100, 2)?></td>
+                        <td class="<?=$metric->best_correct_entropy == 1 ? "font-weight-bold" : ""?>"><?=number_format($metric->correct_entropy*100, 2)?></td>
+                        <td class="<?=$metric->best_wrong_entropy == 1 ? "font-weight-bold" : ""?>"><?=number_format($metric->wrong_entropy*100, 2)?></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
