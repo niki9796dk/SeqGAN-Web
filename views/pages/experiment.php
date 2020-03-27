@@ -14,14 +14,14 @@ $metrics =  $_sql->SELECT_allMetricsForExperimentById($experimentId);
 $metricDefault = "?";
 $decimals = 0;
 
-Layout::echoHead();
+Layout::echoHead([], "[$experimentId] $experiment->name");
 ?>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 text-center">
             <hr>
-            <h3>Experiment: [<?=$experiment->experiment_id?>] <?=$experiment->name?></h3>
+            <h3>Experiment: [<?=$experiment->experiment_id?>] <?=$experiment->name?> <span class="good_star" style='font-size: 1.5em; color: <?=($experiment->good) ? "orange" : "gray";?>'><?=($experiment->good) ? "&#9733;" : "&#9734;"?></span></h3>
             <hr>
         </div>
     </div>

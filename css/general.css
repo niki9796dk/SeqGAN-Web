@@ -4,3 +4,8 @@
 .clickable td:hover {
     cursor: pointer;
 }
+
+.good_star:hover {
+    color: orange !important;
+    cursor: pointer;
+}

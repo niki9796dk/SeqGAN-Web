@@ -15,6 +15,7 @@ class Dependencies
             "libs/bootstrap/js/bootstrap.bundle.min.js",
             "js/dataTable.js",
             "js/clickable.js",
+            "js/goodStar.js",
         ];
     }
 }

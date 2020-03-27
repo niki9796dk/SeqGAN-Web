@@ -39,7 +39,7 @@ Layout::echoHead();
                 </thead>
                 <tbody>
                 <?php foreach ($_sql->SELECT_allExperimentsFromPeriod($period) as $experiments): ?>
-                    <tr class="clickable" data-href="/views/pages/experiment.php?id=<?=$experiments->experiment_id?>">
+                    <tr class="clickable href" data-href="/views/pages/experiment.php?id=<?=$experiments->experiment_id?>">
                         <td data-sort="<?=-$experiments->experiment_id?>"><?=$experiments->experiment_id?></td>
                         <td><?=$experiments->name?> <?=$experiments->good ? "<span style='font-size: 1.5em; color: orange'>&#9733;</span>" : ""?></td>
                         <td><?=$experiments->model?></td>
