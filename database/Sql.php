@@ -35,6 +35,18 @@ class Sql
         return intval($query->fetch()->latest_period);
     }
 
+    public function SELECT_lossDataForExperiment($id) {
+        $query = $this->_db->prepare('
+                                                SELECT * FROM losses WHERE experiment_id=:id
+                                                ');
+
+        $query->execute([
+            ":id" => $id,
+        ]);
+
+        return $query->fetchAll();
+    }
+
     public function UPDATE_flipGoodValue($id) {
         $query = $this->_db->prepare('
                                                 UPDATE experiments SET good=(SELECT not_good FROM (SELECT (NOT good) as not_good FROM experiments WHERE experiment_id=:id_1) as temp) WHERE experiment_id=:id_2

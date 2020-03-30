@@ -1,8 +1,6 @@
 $( document ).ready(function() {
 
-    let clickables = $(".clickable");
-
-    clickables.on('mousedown', function(e) {
+    $("body").on("mousedown", ".clickable", function (e) {
         e.preventDefault();
         let $this = $(this);
         let href = $this.data("href");
@@ -17,9 +15,7 @@ $( document ).ready(function() {
         } else if (middleClick || leftCtrlClick) {
             openInNewTab(href);
         }
-
     });
-
 
     function openInNewTab(url) {
         let new_window = window.open(url);

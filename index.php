@@ -27,7 +27,7 @@ Layout::echoHead();
 
     <div class="row">
         <div class="col-12">
-            <table class="table table-bordered dataTable table-hover">
+            <table id="experiments_table" class="table table-bordered table-hover">
                 <thead>
                 <tr>
                     <th>Experiment ID</th>
@@ -37,21 +37,21 @@ Layout::echoHead();
                     <th>Time</th>
                 </tr>
                 </thead>
-                <tbody>
-                <?php foreach ($_sql->SELECT_allExperimentsFromPeriod($period) as $experiments): ?>
-                    <tr class="clickable href" data-href="/views/pages/experiment.php?id=<?=$experiments->experiment_id?>">
-                        <td data-sort="<?=-$experiments->experiment_id?>"><?=$experiments->experiment_id?></td>
-                        <td><?=$experiments->name?> <?=$experiments->good ? "<span style='font-size: 1.5em; color: orange'>&#9733;</span>" : ""?></td>
-                        <td><?=$experiments->model?></td>
-                        <td><pre><?=file_get_contents("http://seqgan.primen.dk/api/hyperParameters.php?experiment_id={$experiments->experiment_id}")?></pre></td>
-                        <td>
-                            <?=$experiments->timestamp?>
-                            <br>
-                            <span style="font-weight: bold"><?=$experiments->running ? "<span style='color: green'>RUNNING</span>" : "DONE"?></span>
-                        </td>
-                    </tr>
-                <?php endforeach;?>
-                </tbody>
+<!--                <tbody>-->
+<!--                --><?php //foreach ($_sql->SELECT_allExperimentsFromPeriod($period) as $experiments): ?>
+<!--                    <tr class="clickable href" data-href="/views/pages/experiment.php?id=--><?//=$experiments->experiment_id?><!--">-->
+<!--                        <td data-sort="--><?//=-$experiments->experiment_id?><!--">--><?//=$experiments->experiment_id?><!--</td>-->
+<!--                        <td>--><?//=$experiments->name?><!-- --><?//=$experiments->good ? "<span style='font-size: 1.5em; color: orange'>&#9733;</span>" : ""?><!--</td>-->
+<!--                        <td>--><?//=$experiments->model?><!--</td>-->
+<!--                        <td><pre>--><?//=file_get_contents("http://seqgan.primen.dk/api/hyperParameters.php?experiment_id={$experiments->experiment_id}")?><!--</pre></td>-->
+<!--                        <td>-->
+<!--                            --><?//=$experiments->timestamp?>
+<!--                            <br>-->
+<!--                            <span style="font-weight: bold">--><?//=$experiments->running ? "<span style='color: green'>RUNNING</span>" : "DONE"?><!--</span>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                --><?php //endforeach;?>
+<!--                </tbody>-->
             </table>
         </div>
     </div>
