@@ -29,7 +29,8 @@ Layout::echoHead([], "[$experimentId] $experiment->name");
     <div class="row">
         <div class="col-12 justify-content-center d-flex">
             <img src="/image/getHistogramPlot.php?experiment_id=<?=$experimentId?>">
-            <img src="/image/getLossPlot.php?experiment_id=<?=$experimentId?>">
+            <?=file_get_contents("http://seqgan.primen.dk/api/lossPlot.php?id=$experimentId")?>
+<!--            <img src="/image/getLossPlot.php?experiment_id=--><?//=$experimentId?><!--">-->
             <pre class="bg-white ml-5"><?=file_get_contents("http://seqgan.primen.dk/api/hyperParameters.php?experiment_id={$experimentId}")?></pre>
         </div>
     </div>
@@ -82,7 +83,7 @@ Layout::echoHead([], "[$experimentId] $experiment->name");
 
     <div class="row">
         <div class="col-12">
-            <table class="table table-bordered dataTable">
+            <table id="experiment_table" class="table table-bordered">
                 <thead>
                     <tr>
                         <th>Epoch</th>
@@ -90,17 +91,17 @@ Layout::echoHead([], "[$experimentId] $experiment->name");
                         <th>Time</th>
                     </tr>
                 </thead>
-                <tbody>
-                <?php foreach ($_sql->SELECT_allEpochsForImagesByExperimentId($experimentId) as $imageEpoch):
-                    $href = "/image/getImage.php?experiment_id={$experiment->experiment_id}&epoch={$imageEpoch->epoch_nr}";
-                ?>
-                    <tr>
-                        <td data-sort="<?=-$imageEpoch->epoch_nr?>"><?=$imageEpoch->epoch_nr?></td>
-                        <td class="w-75"><a href="<?=$href?>"><img alt="" src="<?=$href?>" style="height: 575px; max-width: 100%"></a></td>
-                        <td><?=$imageEpoch->timestamp?></td>
-                    </tr>
-                <?php endforeach;?>
-                </tbody>
+<!--                <tbody>-->
+<!--                --><?php //foreach ($_sql->SELECT_allEpochsForImagesByExperimentId($experimentId) as $imageEpoch):
+//                    $href = "/image/getImage.php?experiment_id={$experiment->experiment_id}&epoch={$imageEpoch->epoch_nr}";
+//                ?>
+<!--                    <tr>-->
+<!--                        <td data-sort="--><?//=-$imageEpoch->epoch_nr?><!--">--><?//=$imageEpoch->epoch_nr?><!--</td>-->
+<!--                        <td class="w-75"><a href="--><?//=$href?><!--"><img alt="" src="--><?//=$href?><!--" style="height: 575px; max-width: 100%"></a></td>-->
+<!--                        <td>--><?//=$imageEpoch->timestamp?><!--</td>-->
+<!--                    </tr>-->
+<!--                --><?php //endforeach;?>
+<!--                </tbody>-->
             </table>
         </div>
     </div>

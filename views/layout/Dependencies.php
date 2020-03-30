@@ -16,6 +16,7 @@ class Dependencies
             "js/dataTable.js",
             "js/clickable.js",
             "js/goodStar.js",
+            "js/chart_utils.js",
         ];
     }
 }
