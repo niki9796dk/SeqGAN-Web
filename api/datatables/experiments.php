@@ -40,11 +40,11 @@ $columns = array(
         }
     ),
     array(
-        'db'        => 'timestamp, running',
+        'db'        => 'timestamp',
         'dt'        => 4,
         'formatter' => function( $d, $row ) {
-            $timestamp = date( 'Y-m-d H:i:s', strtotime($d[0]));
-            $running = "<span style='font-weight: bold'>".($d[1] ? "<span style='color: green'>RUNNING</span>" : "DONE")."</span>";
+            $timestamp = date( 'Y-m-d H:i:s', strtotime($d));
+            $running = "<span style='font-weight: bold'>".($row["running"] ? "<span style='color: green'>RUNNING</span>" : "DONE")."</span>";
 
             return "$timestamp<br>$running";
         }

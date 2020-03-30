@@ -23,11 +23,11 @@ $primaryKey = '*';
 $columns = array(
     array( 'db' => 'epoch_nr', 'dt' => 0 ),
     array(
-        'db'        => 'experiment_id, epoch_nr',
+        'db'        => 'experiment_id',
         'dt'        => 1,
         'formatter' => function( $d, $row ) {
-            $experiment_id = $d[0];
-            $epoch = $d[1];
+            $experiment_id = $d;
+            $epoch = $row["epoch_nr"];
             $href = "/image/getImage.php?experiment_id={$experiment_id}&epoch={$epoch}";
 
             return "<a href='$href'><img alt='' src='$href' style='height: 575px; max-width: 100%'></a>";
