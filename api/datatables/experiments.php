@@ -17,6 +17,8 @@ $table = "
                                                      
         LEFT JOIN experiment_export_rates
         ON experiments.experiment_id = experiment_export_rates.experiment_id
+        
+        ORDER BY experiment_id DESC
     ) as temp
 ";
 
@@ -28,6 +30,7 @@ $primaryKey = 'experiment_id';
 // parameter represents the DataTables column identifier. In this case simple
 // indexes
 $columns = array(
+    array( 'db' => 'running'),
     array( 'db' => 'experiment_id', 'dt' => 0 ),
     array( 'db' => 'name',          'dt' => 1 ),
     array( 'db' => 'model',         'dt' => 2 ),
@@ -44,7 +47,7 @@ $columns = array(
         'dt'        => 4,
         'formatter' => function( $d, $row ) {
             $timestamp = date( 'Y-m-d H:i:s', strtotime($d));
-            $running = "<span style='font-weight: bold'>".($row["running"] ? "<span style='color: green'>RUNNING</span>" : "DONE")."</span>";
+            $running = "<span style='font-weight: bold'>".($row["running"] == "1" ? "<span style='color: green'>RUNNING</span>" : "DONE")."</span>";
 
             return "$timestamp<br>$running";
         }
