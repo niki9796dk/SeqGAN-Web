@@ -71,9 +71,9 @@ Layout::echoHead([], "[$experimentId] $experiment->name");
                         <td class="<?=$metric->best_unique_wrong_sequences == 1 ? "font-weight-bold" : ""?>"><?=number_format($metric->unique_wrong_sequences * 100 / $total)?>% <small>(<?=number_format($metric->unique_wrong_sequences * 100 / $unique_total)?>%)</small></td>
                         <td class="border-left <?=$metric->best_edit_distance_all == 1 ? "font-weight-bold" : ""?>"><?=number_format($metric->edit_distance_all, 2)?></td>
                         <td class="<?=$metric->best_edit_distance_wrong == 1 ? "font-weight-bold" : ""?>"><?=number_format($metric->edit_distance_wrong, 2)?></td>
-                        <td class="border-left <?=$metric->best_sequence_entropy == 1 ? "font-weight-bold" : ""?>"><?=number_format($metric->sequence_entropy*100, 2)?></td>
-                        <td class="<?=$metric->best_correct_entropy == 1 ? "font-weight-bold" : ""?>"><?=number_format($metric->correct_entropy*100, 2)?></td>
-                        <td class="<?=$metric->best_wrong_entropy == 1 ? "font-weight-bold" : ""?>"><?=number_format($metric->wrong_entropy*100, 2)?></td>
+                        <td class="border-left <?=$metric->best_sequence_entropy == 1 ? "font-weight-bold" : ""?>"><?=$metric->sequence_entropy != null ? number_format($metric->sequence_entropy*100, 2) : "Null"?></td>
+                        <td class="<?=$metric->best_correct_entropy == 1 ? "font-weight-bold" : ""?>"><?=$metric->correct_entropy != null ? number_format($metric->correct_entropy*100, 2) : "Null"?></td>
+                        <td class="<?=$metric->best_wrong_entropy == 1 ? "font-weight-bold" : ""?>"><?=$metric->wrong_entropy != null ? number_format($metric->wrong_entropy*100, 2) : "Null"?></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
