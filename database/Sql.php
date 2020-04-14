@@ -203,6 +203,17 @@ class Sql
         return $query->fetch()->loss_plot;
     }
 
+    public function SELECT_prefixPlot(int $experiment_id, int $epoch): ?string {
+        $query = $this->_db->prepare('SELECT prefix_image from metrics WHERE experiment_id=:experiment_id AND epoch_nr=:epoch');
+
+        $query->execute([
+            ":experiment_id" => $experiment_id,
+            ":epoch" => $epoch,
+        ]);
+
+        return $query->fetch()->prefix_image;
+    }
+
     public function SELECT_histogramPlot(int $experiment_id): ?string {
         $query = $this->_db->prepare('SELECT histogram from histograms WHERE experiment_id=:experiment_id ORDER BY epoch_nr LIMIT 1');
 

@@ -76,7 +76,7 @@ function prettyPrint( $json )
     $result = preg_replace("/: (None)/", ": <span style='color: red'>$1</span>", $result);
 
     // Make numbers Blue
-    $result = preg_replace("/: (\d+(.\d+)?)/", ": <span style='color: blue'>$1</span>", $result);
+    $result = preg_replace("/: (-?\d+(.\d+)?)/", ": <span style='color: blue'>$1</span>", $result);
 
     // Make true/false orange
     $result = preg_replace("/: (True|False)/", ": <span style='color: #e8640c'>$1</span>", $result);

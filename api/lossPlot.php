@@ -39,7 +39,7 @@ $experiment_id = $_REQUEST["id"];
                 fill: false,
                 backgroundColor: window.chartColors.red,
                 borderColor: window.chartColors.red,
-                data: new Array(data.length).fill(0.69),
+                data: new Array(data.length).fill(0.69*2),
                 borderDash: [10,5],
             }]
         },

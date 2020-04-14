@@ -44,6 +44,7 @@ Layout::echoHead([], "[$experimentId] $experiment->name");
                         <th colspan="3" class="bg-white text-center border-left border-top">% Unique</th>
                         <th colspan="2" class="bg-white text-center border-left border-top">Mean edit distance</th>
                         <th colspan="3" class="bg-white text-center border-left border-top border-right">Entropy score</th>
+                        <th colspan="1" class="border-0"><button class="btn btn-secondary" onclick="$('.prefix-image').toggle()"><small>Show/Hide</small></button></th>
                     </tr>
                     <tr class="border-left border-right text-center bg-white">
                         <th>Epoch</th>
@@ -56,6 +57,7 @@ Layout::echoHead([], "[$experimentId] $experiment->name");
                         <th class="border-left">All</th>
                         <th>Correct</th>
                         <th>Wrong</th>
+                        <th>Prefix Accuracy</th>
                     </tr>
                 </thead>
                 <tbody class="text-center bg-white">
@@ -74,6 +76,7 @@ Layout::echoHead([], "[$experimentId] $experiment->name");
                         <td class="border-left <?=$metric->best_sequence_entropy == 1 ? "font-weight-bold" : ""?>"><?=$metric->sequence_entropy != null ? number_format($metric->sequence_entropy*100, 2) : "Null"?></td>
                         <td class="<?=$metric->best_correct_entropy == 1 ? "font-weight-bold" : ""?>"><?=$metric->correct_entropy != null ? number_format($metric->correct_entropy*100, 2) : "Null"?></td>
                         <td class="<?=$metric->best_wrong_entropy == 1 ? "font-weight-bold" : ""?>"><?=$metric->wrong_entropy != null ? number_format($metric->wrong_entropy*100, 2) : "Null"?></td>
+                        <td><img class="w-75 prefix-image" src="/image/getPrefixPlot.php?experiment_id=<?=$experimentId?>&epoch=<?=$metric->epoch_nr?>"></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
