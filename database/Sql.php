@@ -35,6 +35,13 @@ class Sql
         return intval($query->fetch()->latest_period);
     }
 
+    public function SELECT_nfaDescriptionByExperimentId($id): ?string {
+        $query = $this->_db->prepare('SELECT fsm_definition FROM experiments LEFT JOIN datasets ON experiments.dataset = datasets.dataset_id WHERE experiment_id=:id');
+
+        $query->execute([":id" => $id]);
+        return $query->fetch()->fsm_definition;
+    }
+
     public function SELECT_lossDataForExperiment($id) {
         $query = $this->_db->prepare('
                                                 SELECT * FROM losses WHERE experiment_id=:id
