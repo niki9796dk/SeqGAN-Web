@@ -9,3 +9,8 @@
     color: orange !important;
     cursor: pointer;
 }
+
+.header-stuff::before, .header-stuff::after {
+    content: '';  /* Insert pseudo-element */
+    margin: auto; /* Make it push flex items to the center */
+}

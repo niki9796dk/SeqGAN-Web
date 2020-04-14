@@ -26,12 +26,14 @@ Layout::echoHead([], "[$experimentId] $experiment->name");
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-12 justify-content-center d-flex">
-            <img src="/image/getHistogramPlot.php?experiment_id=<?=$experimentId?>">
+    <div class="row" style="overflow: auto">
+        <div class="col-12 d-flex header-stuff" style="overflow: auto">
+            <img style="height: fit-content" src="/image/getHistogramPlot.php?experiment_id=<?=$experimentId?>">
             <?=file_get_contents("http://seqgan.primen.dk/api/lossPlot.php?id=$experimentId")?>
 <!--            <img src="/image/getLossPlot.php?experiment_id=--><?//=$experimentId?><!--">-->
-            <pre class="bg-white ml-5"><?=file_get_contents("http://seqgan.primen.dk/api/hyperParameters.php?experiment_id={$experimentId}")?></pre>
+            <pre class="bg-white ml-3" style="overflow: visible!important;height: fit-content"><?=file_get_contents("http://seqgan.primen.dk/api/hyperParameters.php?experiment_id={$experimentId}")?></pre>
+            <?=file_get_contents("http://seqgan.primen.dk/api/NfaDisplayerJs.php?experiment_id=$experimentId")?>
+            <div class="spacer pr-3 pr-xl-0"></div>
         </div>
     </div>
 

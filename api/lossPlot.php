@@ -9,7 +9,7 @@ $experiment_id = $_REQUEST["id"];
 
 ?>
 
-<div class="bg-white" style="width: 600px; height: 600px">
+<div class="bg-white" style="width: 600px; height: fit-content">
     <canvas id="canvas"></canvas>
 </div>
 <br>
