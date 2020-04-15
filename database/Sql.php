@@ -36,7 +36,7 @@ class Sql
     }
 
     public function SELECT_nfaDescriptionByExperimentId($id): ?string {
-        $query = $this->_db->prepare('SELECT fsm_definition FROM experiments LEFT JOIN datasets ON experiments.dataset = datasets.dataset_id WHERE experiment_id=:id');
+        $query = $this->_db->prepare('SELECT fsm_definition FROM experiments LEFT JOIN automatas ON experiments.dataset = automatas.automata_id WHERE experiment_id=:id');
 
         $query->execute([":id" => $id]);
         return $query->fetch()->fsm_definition;

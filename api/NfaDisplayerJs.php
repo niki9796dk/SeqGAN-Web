@@ -24,7 +24,7 @@ if (!isset($automaton)) {
 <div class="svg-container ml-3 bg-white">
     <h3>Dataset NFA</h3>
     <div class="svg"></div>
-    <a href="/api/NfaDisplayerJs.php?experiment_id=<?=$experiment_id?>&small_size=false" target="_blank">Full size</a>
+    <a href="/api/NfaDisplayerJs.php?experiment_id=<?=$experiment_id?>&small_size=false" target="_blank">Original size</a>
     <textarea class="svg-fsm mt-3" style="width: 100%" rows="6" readonly><?=$automaton?></textarea>
     <a href="http://ivanzuzak.info/noam/webapps/fsm_simulator/" target="_blank">Simulator</a>
 </div>
