@@ -200,6 +200,17 @@ class Sql
         return $query->fetch()->image;
     }
 
+    public function SELECT_text(int $experiment_id, int $epoch): string {
+        $query = $this->_db->prepare('SELECT text from texts WHERE experiment_id=:experiment_id AND epoch_nr=:epoch');
+
+        $query->execute([
+            ":experiment_id" => $experiment_id,
+            ":epoch" => $epoch,
+        ]);
+
+        return $query->fetch()->text;
+    }
+
     public function SELECT_lossPlot(int $experiment_id): ?string {
         $query = $this->_db->prepare('SELECT loss_plot from loss_plots WHERE experiment_id=:experiment_id');
 

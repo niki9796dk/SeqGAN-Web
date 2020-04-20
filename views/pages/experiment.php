@@ -13,6 +13,7 @@ $experiment = $_sql->SELECT_experiment($experimentId);
 $metrics =  $_sql->SELECT_allMetricsForExperimentById($experimentId);
 $metricDefault = "?";
 $decimals = 0;
+$is_text = $experiment->is_text;
 
 Layout::echoHead([], "[$experimentId] $experiment->name");
 ?>
@@ -37,6 +38,7 @@ Layout::echoHead([], "[$experimentId] $experiment->name");
         </div>
     </div>
 
+    <?php if (!$is_text): ?>
     <div class="row my-5">
         <div class="col-12 justify-content-center d-flex">
             <table class="border-dark table table-hover w-auto">
@@ -85,28 +87,18 @@ Layout::echoHead([], "[$experimentId] $experiment->name");
             </table>
         </div>
     </div>
+    <?php endif;?>
 
     <div class="row">
         <div class="col-12">
-            <table id="experiment_table" class="table table-bordered">
+            <table id="experiment_table_<?=$is_text ? "text" : "images"?>" class="table table-bordered">
                 <thead>
                     <tr>
                         <th>Epoch</th>
-                        <th>Image</th>
+                        <th><?=$is_text ? "Text" : "Image"?></th>
                         <th>Time</th>
                     </tr>
                 </thead>
-<!--                <tbody>-->
-<!--                --><?php //foreach ($_sql->SELECT_allEpochsForImagesByExperimentId($experimentId) as $imageEpoch):
-//                    $href = "/image/getImage.php?experiment_id={$experiment->experiment_id}&epoch={$imageEpoch->epoch_nr}";
-//                ?>
-<!--                    <tr>-->
-<!--                        <td data-sort="--><?//=-$imageEpoch->epoch_nr?><!--">--><?//=$imageEpoch->epoch_nr?><!--</td>-->
-<!--                        <td class="w-75"><a href="--><?//=$href?><!--"><img alt="" src="--><?//=$href?><!--" style="height: 575px; max-width: 100%"></a></td>-->
-<!--                        <td>--><?//=$imageEpoch->timestamp?><!--</td>-->
-<!--                    </tr>-->
-<!--                --><?php //endforeach;?>
-<!--                </tbody>-->
             </table>
         </div>
     </div>

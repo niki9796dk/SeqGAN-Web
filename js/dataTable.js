@@ -23,11 +23,27 @@
         } );
 
         // Specific - experiment.php
-        $('#experiment_table').DataTable( {
+        $('#experiment_table_images').DataTable( {
             "processing": true,
             "serverSide": true,
             "ajax": {
-                "url": "/api/datatables/experiment.php",
+                "url": "/api/datatables/experiment_images.php",
+                "data": {
+                    "experiment_id": searchParams.get("id"),
+                }
+            },
+            "order": [[ 0, "desc" ]],
+            "createdRow": function (row, data, index) {
+                $($(row).children()[1]).addClass("w-75");
+            },
+        } );
+
+        // Specific - experiment.php
+        $('#experiment_table_text').DataTable( {
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "/api/datatables/experiment_text.php",
                 "data": {
                     "experiment_id": searchParams.get("id"),
                 }
