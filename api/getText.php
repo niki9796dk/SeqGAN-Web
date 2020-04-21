@@ -14,6 +14,22 @@ $_sql = new Sql();
 $text = $_sql->SELECT_text($experiment_id, $epoch);
 
 if ($text) {
+    # Textual changes
+    $text = preg_replace("/-LRB- ?/", "(", $text);
+    $text = preg_replace("/ ?-RRB-/", ")", $text);
+    $text = preg_replace("/ ,/", ",", $text);
+    $text = preg_replace("/ \./", ".", $text);
+    $text = preg_replace("/ ('\w+)/", "$1", $text);
+    $text = preg_replace("/ n't/", "n't", $text);
+    $text = preg_replace("/ !/", "!", $text);
+    $text = preg_replace("/ \?/", "?", $text);
+
+    // Escape special chars
+    $text = htmlspecialchars($text);
+
+    # Coloring
+    $text = preg_replace("/ : (\d+\.\d+%)/", " : <b>$1</b>", $text);
+
     echo $text;
 } else {
     echo "No text found for epoch $epoch";

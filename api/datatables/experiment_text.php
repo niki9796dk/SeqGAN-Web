@@ -29,7 +29,7 @@ $columns = array(
             $experiment_id = $d;
             $epoch = $row["epoch_nr"];
 
-            return "<pre>".htmlspecialchars(file_get_contents("http://seqgan.primen.dk/api/getText.php?experiment_id=$experiment_id&epoch=$epoch"))."</pre>";
+            return "<pre>".file_get_contents("http://seqgan.primen.dk/api/getText.php?experiment_id=$experiment_id&epoch=$epoch")."</pre>";
         }
     ),
     array(
