@@ -10,7 +10,6 @@ $experimentId = intval($_REQUEST["id"]);
 $_sql = new Sql();
 
 $experiment = $_sql->SELECT_experiment($experimentId);
-$metrics =  $_sql->SELECT_allMetricsForExperimentById($experimentId);
 $metricDefault = "?";
 $decimals = 0;
 $is_text = $experiment->is_text;
@@ -65,7 +64,7 @@ Layout::echoHead([], "[$experimentId] $experiment->name");
                     </tr>
                 </thead>
                 <tbody class="text-center bg-white">
-                <?php foreach($metrics as $metric):
+                <?php foreach($_sql->SELECT_allImageMetricsForExperimentById($experimentId) as $metric):
                     $total = $metric->correct_sequences + $metric->wrong_sequences;
                     $unique_total = $metric->unique_correct_sequences + $metric->unique_wrong_sequences;
                     ?>
@@ -88,6 +87,35 @@ Layout::echoHead([], "[$experimentId] $experiment->name");
         </div>
     </div>
     <?php endif;?>
+
+    <?php if ($is_text): ?>
+        <div class="row my-5">
+            <div class="col-12 justify-content-center d-flex">
+                <table class="border-dark table table-hover w-auto">
+                    <thead class="">
+<!--                    <tr class="text-center">-->
+<!--                        <th colspan="1" class="border-top-0"></th>-->
+<!--                        <th colspan="1" class="bg-white text-center border-left border-top border-right">BLEU</th>-->
+<!--                    </tr>-->
+                    <tr class="border-left border-right text-center bg-white">
+                        <th>Epoch</th>
+                        <th class="border-left">Bleu-2</th>
+                        <th class="border-left">Bleu-3</th>
+                    </tr>
+                    </thead>
+                    <tbody class="text-center bg-white">
+                    <?php foreach($_sql->SELECT_allTextMetricsForExperimentById($experimentId) as $metric):?>
+                        <tr class="border">
+                            <td><?=$metric->epoch_nr?></td>
+                            <td class="border-left <?=$metric->best_bleu2 == 1 ? "font-weight-bold" : ""?>"><?=isset($metric->bleu2) ? number_format($metric->bleu2, 2) : "NULL"?></td>
+                            <td class="border-left <?=$metric->best_bleu3 == 1 ? "font-weight-bold" : ""?>"><?=isset($metric->bleu3) ? number_format($metric->bleu3, 2) : "NULL"?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <?php endif; ?>
 
     <div class="row">
         <div class="col-12">

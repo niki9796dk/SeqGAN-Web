@@ -67,7 +67,7 @@ class Sql
         return $result;
     }
 
-    public function SELECT_allMetricsForExperimentById($id) {
+    public function SELECT_allImageMetricsForExperimentById($id) {
         $query = $this->_db->prepare('
                                                 SELECT metrics.*, 
                                                        accuracy=best_accuracy as best_accuracy,
@@ -103,6 +103,30 @@ class Sql
             ":id_1" => $id,
             ":id_2" => $id,
             ]);
+
+        return $query->fetchAll();
+    }
+
+    public function SELECT_allTextMetricsForExperimentById($id) {
+        $query = $this->_db->prepare('
+                                                SELECT text_metrics.*, 
+                                                       bleu2=best_bleu2 as best_bleu2,
+                                                       bleu3=best_bleu3 as best_bleu3
+                                                FROM text_metrics, (
+                                                    SELECT 
+                                                           MAX(bleu2) as best_bleu2,
+                                                           MAX(bleu3) as best_bleu3
+                                                    from text_metrics 
+                                                    WHERE experiment_id = :id_1
+                                                    ) as best
+                                                WHERE  text_metrics.experiment_id = :id_2
+                                                ORDER BY epoch_nr DESC
+                                                ');
+
+        $query->execute([
+            ":id_1" => $id,
+            ":id_2" => $id,
+        ]);
 
         return $query->fetchAll();
     }

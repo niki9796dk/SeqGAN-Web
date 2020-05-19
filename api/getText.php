@@ -28,7 +28,11 @@ if ($text) {
     $text = htmlspecialchars($text);
 
     # Coloring
-    $text = preg_replace("/ : (\d+\.\d+%)/", " : <b>$1</b>", $text);
+    $text = preg_replace("/ : (\d+\.\d+%)$/m", " <b>: $1</b>", $text); // Percentages in bold black
+
+    $text = preg_replace("/ : (\d+\.\d+)$/m", " <b>:</b> <b style='color: green;'>$1</b>", $text); // Positive scores in green
+    $text = preg_replace("/ : (-\d+\.\d+)$/m", " <b>:</b> <b style='color: darkred'>$1</b>", $text); // Negative scores in red
+
 
     echo $text;
 } else {
